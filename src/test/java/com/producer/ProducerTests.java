@@ -32,8 +32,10 @@ class ProducerTests {
 
     @Test
     public void testMessageProcessedSuccessfully() {
-        kafkaTemplate.send("test-topic", "Message1");
-        consumerService.listen("Message1");
+        kafkaTemplate.send("test-topic", "Hello, world!");
+
+        consumerService.listen("Hello, world!");
+
         assertEquals(1, consumerService.getSuccessCount(), "Success count should be 1");
         assertEquals(0, consumerService.getFailureCount(), "Failure count should be 0");
     }
@@ -41,7 +43,9 @@ class ProducerTests {
     @Test
     public void testMessageProcessingFailure() {
         kafkaTemplate.send("test-topic", "fail");
+
         consumerService.listen("fail");
+
         assertEquals(0, consumerService.getSuccessCount(), "Success count should be 0");
         assertEquals(1, consumerService.getFailureCount(), "Failure count should be 1");
     }
